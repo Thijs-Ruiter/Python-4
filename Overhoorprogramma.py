@@ -99,6 +99,7 @@ def overhoren(woordenlijst):
 
 def voeg_woorden_toe(woordenlijst):
     f = open(woordenlijst + EXTENSIE, 'a')
+    woord = ''
 
     while woord != STOPPEN:
         print_regel('Typ het woord dat je wilt toevoegen')
