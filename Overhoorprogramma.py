@@ -1,3 +1,5 @@
+import random
+
 EXTENSIE = '.txt'
 KIES_LIJST = 'k'
 NIEUWE_LIJST = 'n'
@@ -81,20 +83,34 @@ def print_regel(inhoud=''):
 
 def overhoren(woordenlijst):
     f = open(woordenlijst + EXTENSIE)
+    overhoorlijst = []
+    score = 0
     for line in f:
-        woord1, woord2 = line.strip('\n').split('=')
+        woord1, woord2 = line.strip('\n').split(SCHEIDER)
+        overhoorlijst.append(woord1 + SCHEIDER + woord2)
+    lijst_lengte = len(overhoorlijst)
+    for i in range(len(overhoorlijst)):
+        woord1, woord2 = random.choice((overhoorlijst)).split(SCHEIDER)
         print_regel("Typ " + STOPPEN + " om te stoppen met overhoren")
         print_regel("Wat is de vertaling van: " + woord1)
         gekozen_woord = input(str('| <@> '))
         print_regel('')
         if (gekozen_woord == woord2):
             print_regel("Correct!")
+            score += 1
         elif (gekozen_woord == STOPPEN):
             break
         else:
             print_regel("Incorrect!")
         print_regel(woord1 + SCHEIDER + woord2)
         print_regel('')
+        overhoorlijst.remove(woord1 + SCHEIDER + woord2)
+    leeg_scherm()
+    print_regel("Je bent klaar met overhoren!")
+    print_regel("Je hebt " + str(score) + " vragen goed")
+    print_regel("Je hebt " + str(lijst_lengte - score) + " vragen fout")
+    print_regel("Typ enter om door te gaan")
+    input()
     f.close()
 
 def voeg_woorden_toe(woordenlijst):
